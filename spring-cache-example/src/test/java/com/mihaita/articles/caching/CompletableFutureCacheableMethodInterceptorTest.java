@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 @SpringBootTest(classes = {MyServiceTestConfiguration.class, CompletableFutureCacheableConfiguration.class},
         properties = {
                 "logging.level.org.springframework.cache=TRACE",
-                "logging.level.com.mihaita.articles.springcacheexample=TRACE",
+                "logging.level.com.mihaita.articles.caching=TRACE",
         })
 @ExtendWith(SpringExtension.class)
 class CompletableFutureCacheableMethodInterceptorTest {
@@ -26,8 +26,8 @@ class CompletableFutureCacheableMethodInterceptorTest {
     public void testFutureCacheableCompletableFuture() {
 
         IntStream.range(0, 10)
-                .mapToObj(i -> 1)
-                .forEach(i -> service.callFuture(i)
+                .mapToObj(i -> 0)
+                .forEach(i -> service.getStuffById(i)
 //                .forEach(i -> service.callFutureUpdatingCache("aa", i)
                         .thenAccept(res -> {
                             log.info("testFutureCacheableCompletableFuture - {} call thenAccept: {}", i, res);
@@ -44,7 +44,7 @@ class CompletableFutureCacheableMethodInterceptorTest {
     public void testEvict() {
         int i = 1;
 
-        service.callFuture(i)
+        service.getStuffById(i)
                 .thenAccept(res -> {
                     log.info("testEvict - {} call thenAccept: {}", i, res);
                 })
@@ -64,7 +64,7 @@ class CompletableFutureCacheableMethodInterceptorTest {
                 })
                 .join();
 
-        service.callFuture(i)
+        service.getStuffById(i)
                 .thenAccept(res -> {
                     log.info("testEvict - {} call thenAccept: {}", i, res);
                 })
