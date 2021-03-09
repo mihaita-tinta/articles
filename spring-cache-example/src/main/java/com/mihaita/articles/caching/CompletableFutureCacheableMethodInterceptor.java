@@ -86,7 +86,6 @@ public class CompletableFutureCacheableMethodInterceptor implements MethodInterc
 
         if (StringUtils.hasText(keySpel)) {
             SpelParserConfiguration config = new SpelParserConfiguration(true, true);
-//            StandardEvaluationContext context = new StandardEvaluationContext(carPark);
             MethodBasedEvaluationContext context = new MethodBasedEvaluationContext(
                     invocation.getThis(),
                     invocation.getMethod(),
