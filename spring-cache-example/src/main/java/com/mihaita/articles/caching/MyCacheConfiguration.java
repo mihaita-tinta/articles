@@ -26,7 +26,7 @@ public class MyCacheConfiguration extends CachingConfigurerSupport {
     @Override
     public CacheManager cacheManager() {
         SimpleCacheManager cacheManager = new SimpleCacheManager();
-        cacheManager.setCaches(Arrays.asList(new ConcurrentMapCache("default")));
+        cacheManager.setCaches(Arrays.asList(new ConcurrentMapCache("default"), new ConcurrentMapCache("default-cache")));
         return cacheManager;
     }
 
