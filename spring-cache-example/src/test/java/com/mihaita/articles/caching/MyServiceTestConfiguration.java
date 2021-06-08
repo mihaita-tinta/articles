@@ -42,7 +42,7 @@ public class MyServiceTestConfiguration {
     public static class MyCompletableFutureService {
         private static final Logger log = getLogger(MyCompletableFutureService.class);
 
-        @Cacheable("default-cache")
+        @Cacheable("default")
         public CompletableFuture<String> getStuffById(int id) {
             log.trace("getStuffById - id: {}", id);
             if (id % 2 == 0) {
