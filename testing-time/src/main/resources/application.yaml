@@ -1,0 +1,22 @@
+management:
+  endpoints:
+   web:
+    exposure:
+     include: startup
+logging:
+  level:
+    info.archinnov.achilles.script: DEBUG
+spring:
+  kafka:
+    bootstrap-servers: ${spring.embedded.kafka.brokers}
+    producer:
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    consumer:
+      auto-offset-reset: earliest
+      group-id: junit
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+       spring.json.trusted.packages: com.mih.testing.cassandra
+
+test:
+  topic: embedded-test-topic

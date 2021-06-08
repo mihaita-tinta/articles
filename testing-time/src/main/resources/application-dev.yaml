@@ -1,0 +1,5 @@
+spring:
+  kafka:
+    bootstrap-servers: [PLAINTEXT://localhost:32789]
+test:
+  topic: dev-test-topic
