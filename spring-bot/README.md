@@ -1,4 +1,9 @@
-﻿# QnA Maker
+﻿# Spring Bot
+Based on the available microsoft samples, you can find here a 
+chat bot that can do small talk and answer weather questions.
+It also supports 120 languages
+
+# QnA Maker
 
 Bot Framework v4 QnA Maker bot sample
 
