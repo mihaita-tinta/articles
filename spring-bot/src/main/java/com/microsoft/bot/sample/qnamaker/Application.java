@@ -4,11 +4,18 @@
 package com.microsoft.bot.sample.qnamaker;
 
 import com.microsoft.bot.builder.Bot;
+import com.microsoft.bot.builder.ConversationState;
+import com.microsoft.bot.builder.Storage;
+import com.microsoft.bot.builder.UserState;
 import com.microsoft.bot.integration.AdapterWithErrorHandler;
 import com.microsoft.bot.integration.BotFrameworkHttpAdapter;
 import com.microsoft.bot.integration.Configuration;
 import com.microsoft.bot.integration.spring.BotController;
 import com.microsoft.bot.integration.spring.BotDependencyConfiguration;
+import com.microsoft.bot.sample.qnamaker.translation.LanguageService;
+import com.microsoft.bot.sample.qnamaker.translation.MicrosoftTranslator;
+import com.microsoft.bot.sample.qnamaker.translation.TranslationMiddleware;
+import com.microsoft.bot.sample.qnamaker.weather.WeatherService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -47,9 +54,15 @@ public class Application extends BotDependencyConfiguration {
      * @return The Bot implementation for this application.
      */
     @Bean
-    public Bot getBot(Configuration configuration) {
-        return new QnABot(configuration);
+    public Bot getBot(UserState userState, BotServices botServices, WeatherService weatherService, LanguageService languageService) {
+        return new DispatchBot(userState, botServices, weatherService, languageService);
     }
+
+    @Bean
+    public BotServices getBotServices(Configuration configuration) {
+        return new BotServicesImpl(configuration);
+    }
+
 
     /**
      * Returns a custom Adapter that provides error handling.
@@ -59,7 +72,37 @@ public class Application extends BotDependencyConfiguration {
      */
     @Override
     public BotFrameworkHttpAdapter getBotFrameworkHttpAdaptor(Configuration configuration) {
-        return new AdapterWithErrorHandler(configuration);
+
+        Storage storage = this.getStorage();
+        ConversationState conversationState = this.getConversationState(storage);
+
+        BotFrameworkHttpAdapter adapter = new AdapterWithErrorHandler(configuration, conversationState);
+        TranslationMiddleware translationMiddleware = this.getTranslationMiddleware(configuration, null);
+        adapter.use(translationMiddleware);
+        return adapter;
+
+    }
+    /**
+     * Create the Translation Middleware that will be added to the middleware pipeline in the AdapterWithErrorHandler.
+     * @param configuration The Configuration object to use.
+     * @return TranslationMiddleware
+     */
+    @Bean
+    public TranslationMiddleware getTranslationMiddleware(Configuration configuration, LanguageService languageService) {
+        Storage storage = this.getStorage();
+        UserState userState = this.getUserState(storage);
+        MicrosoftTranslator microsoftTranslator = this.getMicrosoftTranslator(configuration);
+        return new TranslationMiddleware(languageService, microsoftTranslator, userState);
+    }
+
+    /**
+     * Create the Microsoft Translator responsible for making calls to the Cognitive Services translation service.
+     * @param configuration The Configuration object to use.
+     * @return MicrosoftTranslator
+     */
+    @Bean
+    public MicrosoftTranslator getMicrosoftTranslator(Configuration configuration) {
+        return new MicrosoftTranslator(configuration);
     }
 
 }
