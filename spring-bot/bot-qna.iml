@@ -69,15 +69,6 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.junit.platform:junit-platform-commons:1.7.0" level="project" />
     <orderEntry type="library" name="Maven: com.microsoft.bot:bot-ai-qna:4.13.0" level="project" />
     <orderEntry type="library" name="Maven: com.microsoft.bot:bot-dialogs:4.13.0" level="project" />
-    <orderEntry type="library" name="Maven: com.microsoft.bot:bot-builder:4.13.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.3" level="project" />
-    <orderEntry type="library" name="Maven: com.codepoetics:protonpack:1.13" level="project" />
-    <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.13.0" level="project" />
-    <orderEntry type="library" name="Maven: com.auth0:jwks-rsa:0.15.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:30.1-jre" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:failureaccess:1.0.1" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:listenablefuture:9999.0-empty-to-avoid-conflict-with-guava" level="project" />
@@ -123,5 +114,18 @@
     <orderEntry type="library" name="Maven: com.nimbusds:lang-tag:1.4.4" level="project" />
     <orderEntry type="library" name="Maven: com.nimbusds:nimbus-jose-jwt:9.1.2" level="project" />
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.8.0" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.bot:bot-ai-luis-v3:4.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.bot:bot-builder:4.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.module:jackson-module-parameter-names:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.3" level="project" />
+    <orderEntry type="library" name="Maven: com.codepoetics:protonpack:1.13" level="project" />
+    <orderEntry type="library" name="Maven: com.auth0:java-jwt:3.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.auth0:jwks-rsa:0.15.0" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.bot:bot-applicationinsights:4.13.0" level="project" />
+    <orderEntry type="library" name="Maven: com.microsoft.azure:applicationinsights-core:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: org.json:json:20190722" level="project" />
   </component>
 </module>
