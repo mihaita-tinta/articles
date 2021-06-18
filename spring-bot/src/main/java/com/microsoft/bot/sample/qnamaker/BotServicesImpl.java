@@ -59,6 +59,7 @@ public class BotServicesImpl implements BotServices {
     /**
      * @return the Dispatch value as a LuisRecognizer.
      */
+    @Override
     public LuisRecognizer getDispatch() {
         return this.dispatch;
     }
@@ -66,6 +67,7 @@ public class BotServicesImpl implements BotServices {
     /**
      * @return the SampleQnA value as a QnAMaker.
      */
+    @Override
     public QnAMaker getSampleQnA() {
         return this.sampleQnA;
     }

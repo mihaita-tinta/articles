@@ -11,6 +11,7 @@ public interface BotServices {
     LuisRecognizer getDispatch();
 
     QnAMaker getSampleQnA();
+
     QnAMaker getChitChatQnA();
 
 }
