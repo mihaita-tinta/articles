@@ -1,0 +1,17 @@
+[
+  {
+    "id": "id-12345",
+    "name": "Transaction 123r5432",
+    "value": 5.99
+  },
+  {
+    "id": "id-565556",
+    "name": "Transaction name 12312312",
+    "value": 11.10
+  },
+  {
+    "id": "id-43543534",
+    "name": "Transaction name 12312312",
+    "value": 23.99
+  }
+]
