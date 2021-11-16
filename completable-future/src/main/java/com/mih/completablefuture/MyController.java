@@ -4,9 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
@@ -83,6 +86,23 @@ public class MyController {
                                 return a;
                             });
                 });
+    }
+
+    @GetMapping("/api/accounts/details-webflux")
+    public Flux<AccountWithTransactions.Accounts> getAccountsDetailsWebFlux() {
+        return accountService.getAccountsWebFlux()
+                .flatMap(account ->
+                    balanceService.getBalanceWebFlux(account.getId())
+                            .zipWith(transactionService.getTransactionsWebFlux(account.getId())
+                                            .collect(Collectors.toList()))
+                            .map(balanceAndTransactions -> {
+                                        AccountWithTransactions.Accounts newAccount = new AccountWithTransactions.Accounts();
+                                        newAccount.setAccount(account);
+                                        newAccount.setBalance(balanceAndTransactions.getT1());
+                                        newAccount.setTransactions(balanceAndTransactions.getT2());
+                                        return newAccount;
+                                    })
+                );
     }
 
     @GetMapping("/external-accounts")

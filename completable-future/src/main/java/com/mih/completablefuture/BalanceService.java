@@ -2,7 +2,6 @@ package com.mih.completablefuture;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.twitter.finagle.Service;
 import com.twitter.finagle.http.Method;
@@ -10,22 +9,39 @@ import com.twitter.finagle.http.Request;
 import com.twitter.finagle.http.Response;
 import com.twitter.finagle.http.Status;
 import com.twitter.util.Future;
+import com.twitter.util.Monitor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
-import java.util.List;
+import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
 @Component
 public class BalanceService {
     private static final Logger log = LoggerFactory.getLogger(BalanceService.class);
     private final Service<Request, Response> httpClient;
+    private final WebClient webClient;
     private final ObjectMapper mapper;
 
-    public BalanceService(Service<Request, Response> httpClient, ObjectMapper mapper) {
+    public BalanceService(Service<Request, Response> httpClient, WebClient webClient, ObjectMapper mapper) {
         this.httpClient = httpClient;
+        this.webClient = webClient;
         this.mapper = mapper;
+    }
+
+    public Mono<Balance> getBalanceWebFlux(String accountId) {
+        return webClient.get()
+                .uri(uriBuilder -> uriBuilder
+                        .path("/v2/accounts/{accountId}/balance")
+                        .build(accountId))
+                .retrieve()
+                .bodyToMono(Balance.class);
     }
 
     public CompletableFuture<Balance> getBalance(String accountId) {
