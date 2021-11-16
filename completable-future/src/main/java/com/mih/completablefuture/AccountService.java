@@ -13,6 +13,8 @@ import com.twitter.util.Future;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Flux;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -22,10 +24,12 @@ public class AccountService {
     private static final Logger log = LoggerFactory.getLogger(AccountService.class);
     private final Service<Request, Response> httpClient;
     private final ObjectMapper mapper;
+    private final WebClient webClient;
 
-    public AccountService(Service<Request, Response> httpClient, ObjectMapper mapper) {
+    public AccountService(Service<Request, Response> httpClient, ObjectMapper mapper, WebClient webClient) {
         this.httpClient = httpClient;
         this.mapper = mapper;
+        this.webClient = webClient;
     }
 
     public CompletableFuture<List<Account>> getAccounts() {
@@ -50,5 +54,13 @@ public class AccountService {
                         return CompletableFuture.failedFuture(e);
                     }
                 });
+    }
+
+
+    public Flux<Account> getAccountsWebFlux() {
+        return webClient.get()
+                .uri("/v2/accounts")
+                .retrieve()
+                .bodyToFlux(Account.class);
     }
 }

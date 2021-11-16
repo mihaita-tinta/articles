@@ -14,8 +14,8 @@ public class WiremockConfig {
     WireMockConfigurationCustomizer optionsCustomizer() {
         return options -> {
             options.asynchronousResponseEnabled(true);
-            options.asynchronousResponseThreads(30);
-            options.jettyAcceptQueueSize(100_000);
+            options.asynchronousResponseThreads(100);
+            options.jettyAcceptQueueSize(130_000);
             log.info("changing wiremock config: {}", options);
         };
     }

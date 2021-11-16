@@ -25,5 +25,10 @@ class AccountServiceTest {
                 .get());
 
     }
+    @Test
+    public void testWebFlux() {
+        assertNotNull(service.getAccountsWebFlux().blockLast());
+
+    }
 
 }
