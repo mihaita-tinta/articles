@@ -5,7 +5,11 @@
   },
   "response": {
     "status": 200,
-    "fixedDelayMilliseconds": 500,
+    "delayDistribution": {
+      "type": "lognormal",
+      "median": 1000,
+      "sigma": 0.4
+    },
     "headers": {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache"

@@ -26,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(properties = {
         "management.endpoints.web.exposure.include=*",
         "spring.boot.admin.client.url=http://localhost:8080",
-        "logging.level.com.mih.completablefuture=DEBUG"
+        "logging.level.root=WARN",
 }, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 @AutoConfigureWireMock(port = 0)
@@ -103,9 +103,9 @@ class MyControllerTest {
         log.debug("CPU Core: " + Runtime.getRuntime().availableProcessors());
         log.debug("CommonPool Parallelism: " + ForkJoinPool.commonPool().getParallelism());
         log.debug("CommonPool Common Parallelism: " + ForkJoinPool.getCommonPoolParallelism());
-        int count = 10_000;
+        int count = 20_000;
         CountDownLatch latch = new CountDownLatch(1);
-        ExecutorService executor = Executors.newFixedThreadPool(100);
+        ExecutorService executor = Executors.newFixedThreadPool(200);
         List<CompletableFuture<Void>> cfs = IntStream.range(0, count)
                 .mapToObj(i ->
                         CompletableFuture.runAsync(() ->
@@ -117,7 +117,48 @@ class MyControllerTest {
                                         .andReturn();
 
                                 this.mockMvc.perform(MockMvcRequestBuilders.asyncDispatch(mvcResult))
-                                        .andDo(print())
+//                                        .andDo(print())
+                                        .andExpect(status().isOk())
+                                        .andExpect(jsonPath("$.length()").value(1));
+                            } catch (Exception e) {
+                                throw new IllegalStateException(e);
+                            }
+                        }, executor))
+                .collect(Collectors.toList());
+
+        AtomicBoolean hasErrors = new AtomicBoolean();
+        CompletableFuture.allOf(cfs.toArray(new CompletableFuture[]{}))
+                .handle((v, err) -> {
+                    hasErrors.set(err != null);
+                    log.debug("testAccountsDetails - finish with: " + err);
+                    latch.countDown();
+                    return null;
+                });
+        latch.await();
+        Assertions.assertFalse(hasErrors.get());
+    }
+
+    @Test
+    public void testAccountsDetailsWebFlux() throws Exception {
+
+        log.debug("CPU Core: " + Runtime.getRuntime().availableProcessors());
+        log.debug("CommonPool Parallelism: " + ForkJoinPool.commonPool().getParallelism());
+        log.debug("CommonPool Common Parallelism: " + ForkJoinPool.getCommonPoolParallelism());
+        int count = 20_000;
+        CountDownLatch latch = new CountDownLatch(1);
+        ExecutorService executor = Executors.newFixedThreadPool(200);
+        List<CompletableFuture<Void>> cfs = IntStream.range(0, count)
+                .mapToObj(i ->
+                        CompletableFuture.runAsync(() ->
+                        {
+                            try {
+
+                                MvcResult mvcResult = mockMvc.perform(
+                                                get("/api/accounts/details-webflux"))
+                                        .andReturn();
+
+                                this.mockMvc.perform(MockMvcRequestBuilders.asyncDispatch(mvcResult))
+//                                        .andDo(print())
                                         .andExpect(status().isOk())
                                         .andExpect(jsonPath("$.length()").value(1));
                             } catch (Exception e) {
