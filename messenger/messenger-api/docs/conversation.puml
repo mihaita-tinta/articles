@@ -1,0 +1,15 @@
+@startuml
+UserA -> MessengerUI: find UserB
+MessengerUI -> MessengerAPI: GET /users?username=UserB
+MessengerAPI -> MessengerUI: [UserB]
+UserA -> MessengerUI: start conversation with UserB
+MessengerUI -> MessengerAPI: POST /conversations {participants: [UserB, UserA]}
+MessengerAPI -> MessengerUI: {conversation}
+MessengerUI <-> MessengerAPI: POST /websocket
+UserA -> MessengerUI: send message
+MessengerUI <--> MessengerAPI: send /websocket {message}
+MessengerAPI <--> MessengerUI: message delivered
+UserA <- MessengerUI: updated message delivered icon
+MessengerAPI <--> MessengerUI: message seen
+UserA <- MessengerUI: updated message seen icon
+@enduml
