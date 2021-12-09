@@ -1,0 +1,107 @@
+= Messenger API
+Mihaita Tinta;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+[[resources]]
+= Resources
+
+
+[[resources-users]]
+== Users
+
+[[resources-users-get]]
+=== Get Users
+
+A `GET` request is used to get the current user
+
+==== Request structure
+
+include::{snippets}/users-get/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/users-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/users-get/curl-request.adoc[]
+[[resources-users-active-get]]
+=== Get Active Users
+
+A `GET` request is used to get the online users
+
+==== Request structure
+
+include::{snippets}/users-active-get/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/users-active-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/users-active-get/curl-request.adoc[]
+
+[[resources-conversations]]
+== Conversations
+
+[[resources-conversations-get]]
+=== Get Conversations
+
+A `GET` request is used to get the available conversations for the current user.
+Someone can access a conversation only if he/she is a participant
+
+==== Request structure
+
+include::{snippets}/conversations-get/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/conversations-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/conversations-get/curl-request.adoc[]
+[[resources-conversations-post]]
+=== Post Conversations
+
+A `POST` request is used to create a conversation between the current user and the indicated list of participants.
+
+==== Request structure
+
+include::{snippets}/conversations-post/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/conversations-post/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/conversations-post/curl-request.adoc[]
+
+
+[[resources-messages]]
+== Messages
+
+[[resources-users-get]]
+=== Get Messages
+
+A `GET` request is used to get messages from a given conversation. The current user needs to be a participant to that conversation to see messages
+
+==== Request structure
+
+include::{snippets}/messages-get/http-request.adoc[]
+
+==== Example response
+
+include::{snippets}/messages-get/http-response.adoc[]
+
+==== CURL request
+
+include::{snippets}/messages-get/curl-request.adoc[]
+

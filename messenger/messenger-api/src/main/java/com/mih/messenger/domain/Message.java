@@ -93,4 +93,9 @@ public class Message {
         message.setDateSent(new Date());
         return message;
     }
+
+    public Message with(Long id) {
+        this.id = id;
+        return this;
+    }
 }

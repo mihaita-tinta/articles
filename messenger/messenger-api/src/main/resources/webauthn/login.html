@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebAuthn MessengerAPI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script type="module" src="node_modules/webauthn-components/dist/webauthn-login.js"></script>
+  <body>
+    <p>Login</p>
+    <webauthn-login assertionStartUrl="/assertion/start" assertionFinishUrl="/assertion/finish"></webauthn-login>
+    <script type="text/javascript">
+
+      let loginElement = document.querySelector('webauthn-login');
+      loginElement.addEventListener('login-started', e => {
+        console.log('login-started - event', e);
+      }, false);
+      loginElement.addEventListener('login-retrieved', e => {
+        console.log('login-retrieved - event', e);
+      }, false);
+      loginElement.addEventListener('login-finished', e => {
+        console.log('login-finished - event', e);
+        window.location.href = '/';
+      }, false);
+      loginElement.addEventListener('login-error', e => {
+        console.log('login-error - event', e);
+      }, false);
+    </script>
+
+  </body>
+</html>

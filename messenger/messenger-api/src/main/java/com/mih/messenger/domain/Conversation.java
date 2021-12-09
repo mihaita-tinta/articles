@@ -52,4 +52,9 @@ public class Conversation {
         conversation.setDateStarted(new Date());
         return conversation;
     }
+
+    public Conversation with(Long id) {
+        this.id = id;
+        return this;
+    }
 }

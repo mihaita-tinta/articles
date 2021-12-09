@@ -1,11 +1,13 @@
 spring:
+  main:
+      web-application-type: reactive
   jackson:
     default-property-inclusion: non_absent
     serialization:
       FAIL_ON_EMPTY_BEANS: false
   web:
    resources:
-    static-locations: classpath:/META-INF/resources/webauthn
+    static-locations: classpath:/META-INF/resources/webauthn/
 webauthn:
   relying-party-id: localhost
   relying-party-name: Example Application

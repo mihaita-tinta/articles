@@ -3,4 +3,14 @@ spring:
     defer-datasource-initialization: true
 #    hibernate:
 #      ddl-auto: 'create-drop'
-
+webauthn:
+  relying-party-id: localhost
+  relying-party-name: Example Application
+  relying-party-icon: http://localhost:8080/assets/logo.png
+  relying-party-origins: http://localhost:8080
+  endpoints:
+    registrationStartPath: /api/registration/start
+    registrationAddPath: /api/registration/add
+    registrationFinishPath: /api/registration/finish
+    assertionStartPath: /api/assertion/start
+    assertionFinishPath: /api/assertion/finish
