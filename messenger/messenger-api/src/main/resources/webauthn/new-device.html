@@ -5,6 +5,7 @@
     <title>WebAuthn MessengerAPI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="module" src="node_modules/webauthn-components/dist/webauthn-enrollment-requester.js"></script>
+    <script type="text/javascript" src="cookies.js"></script>
   <body>
     <webauthn-enrollment-requester enrollmentStartUrl="/registration/start" enrollmentFinishUrl="/registration/finish"></webauthn-enrollment-requester>
     <script type="text/javascript">
@@ -12,6 +13,7 @@
       let element = document.querySelector('webauthn-enrollment-provider');
       element.addEventListener('enrollment-started', e => {
         console.log('enrollment-started', e);
+        element.fetchOptions.headers = { ...element.fetchOptions.headers, "X-XSRF-TOKEN": getCookie('XSRF-TOKEN')};
       }, false);
       element.addEventListener('enrollment-completed', e => {
         console.log('enrollment-completed - event', e);

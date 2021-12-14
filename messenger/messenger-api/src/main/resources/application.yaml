@@ -1,4 +1,7 @@
+
 spring:
+  datasource:
+    url: 'jdbc:h2:mem:api'
   main:
       web-application-type: reactive
   jackson:
@@ -19,3 +22,6 @@ webauthn:
     registrationFinishPath: /api/registration/finish
     assertionStartPath: /api/assertion/start
     assertionFinishPath: /api/assertion/finish
+logging:
+  level:
+    org.springframework.security: DEBUG

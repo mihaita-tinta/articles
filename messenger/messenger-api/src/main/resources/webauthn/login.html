@@ -5,6 +5,7 @@
     <title>WebAuthn MessengerAPI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="module" src="node_modules/webauthn-components/dist/webauthn-login.js"></script>
+    <script type="text/javascript" src="cookies.js"></script>
   <body>
     <p>Login</p>
     <webauthn-login assertionStartUrl="/assertion/start" assertionFinishUrl="/assertion/finish"></webauthn-login>
@@ -13,6 +14,7 @@
       let loginElement = document.querySelector('webauthn-login');
       loginElement.addEventListener('login-started', e => {
         console.log('login-started - event', e);
+        loginElement.fetchOptions.headers = { ...loginElement.fetchOptions.headers, "X-XSRF-TOKEN": getCookie('XSRF-TOKEN')};
       }, false);
       loginElement.addEventListener('login-retrieved', e => {
         console.log('login-retrieved - event', e);

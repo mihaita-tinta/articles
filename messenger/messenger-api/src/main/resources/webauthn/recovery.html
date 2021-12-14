@@ -5,6 +5,7 @@
     <title>WebAuthn MessengerAPI</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="module" src="node_modules/webauthn-components/dist/webauthn-recovery.js"></script>
+    <script type="text/javascript" src="cookies.js"></script>
   <body>
     <p>Recovery</p>
     <webauthn-recovery recoveryStartUrl="/registration/start" recoveryFinishUrl="/registration/finish"></webauthn-recovery>
@@ -13,6 +14,7 @@
       let element = document.querySelector('webauthn-recovery');
       element.addEventListener('recovery-started', e => {
         console.log('recovery-started - event', e);
+        element.fetchOptions.headers = { ...element.fetchOptions.headers, "X-XSRF-TOKEN": getCookie('XSRF-TOKEN')};
       }, false);
       element.addEventListener('recovery-created', e => {
         console.log('recovery-created - event', e);

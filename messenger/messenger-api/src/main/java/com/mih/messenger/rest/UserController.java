@@ -21,9 +21,8 @@ public class UserController {
     }
 
     @GetMapping("/users/")
-    public Mono<UserDto> get(@AuthenticationPrincipal Mono<User> user) {
-        return user
-                .map(UserMapper.INSTANCE::toDto);
+    public UserDto get(@AuthenticationPrincipal User user) {
+        return UserMapper.INSTANCE.toDto(user);
     }
 
     @GetMapping("/users/active/")

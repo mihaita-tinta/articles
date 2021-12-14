@@ -6,14 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="module" src="node_modules/webauthn-components/dist/webauthn-login.js"></script>
     <script type="module" src="node_modules/webauthn-components/dist/webauthn-registration.js"></script>
+    <script type="text/javascript" src="cookies.js"></script>
   <body>
     <p>Create an account</p>
     <webauthn-registration registrationStartUrl="/registration/start" registrationFinishUrl="/registration/finish"></webauthn-registration>
     <script type="text/javascript">
 
       let registrationElement = document.querySelector('webauthn-registration');
+
       registrationElement.addEventListener('registration-started', e => {
         console.log('registration-started - event', e);
+        registrationElement.fetchOptions.headers = { ...registrationElement.fetchOptions.headers, "X-XSRF-TOKEN": getCookie('XSRF-TOKEN')};
       }, false);
       registrationElement.addEventListener('registration-created', e => {
         console.log('registration-created - event', e);
