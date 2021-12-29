@@ -1,0 +1,25 @@
+<p>
+  <mat-toolbar>
+    <span>Messenger UI</span>
+    <span class="example-spacer"></span>
+    <button color="primary" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>message</mat-icon>
+        <a [routerLink]="['/conversation']">Conversations</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>supervisor_account</mat-icon>
+        <a [routerLink]="['/users']">Users</a>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>logout</mat-icon>
+        <a [routerLink]="['/login']">Logout</a>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+</p>
+
+<router-outlet></router-outlet>

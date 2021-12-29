@@ -1,0 +1,20 @@
+<mat-grid-list cols="1" rows="1" rowHeight="300px">
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Conversations</mat-card-title>
+      <mat-card-content>
+        <mat-list role="list">
+          <mat-list-item role="listitem">
+            <button mat-menu-item>
+              <a [routerLink]="['/conversation/123']">Conversation1 <mat-icon>navigate_next</mat-icon></a>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-menu-item>
+              <a [routerLink]="['/conversation/456']">Conversation2 <mat-icon>navigate_next</mat-icon></a>
+            </button></mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </mat-grid-tile>
+</mat-grid-list>
