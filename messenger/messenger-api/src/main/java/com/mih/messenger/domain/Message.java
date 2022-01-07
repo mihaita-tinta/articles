@@ -28,6 +28,7 @@ public class Message {
     private Date dateSent;
     private Date dateDelivered;
     private Date dateViewed;
+    private Long avatar;
 
     public Long getId() {
         return id;
@@ -85,12 +86,21 @@ public class Message {
         this.dateViewed = dateViewed;
     }
 
-    public static Message from(User sender, Conversation conversation, String content) {
+    public Long getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Long avatar) {
+        this.avatar = avatar;
+    }
+
+    public static Message from(User sender, Conversation conversation, String content, Long avatar) {
         Message message = new Message();
         message.setContent(content);
         message.setConversation(conversation);
         message.setFrom(sender);
         message.setDateSent(new Date());
+        message.setAvatar(avatar);
         return message;
     }
 

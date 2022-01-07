@@ -61,3 +61,6 @@ import 'zone.js/dist/zone';  // Included with Angular CLI.
 /***************************************************************************************************
  * APPLICATION IMPORTS
  */
+
+import 'node_modules/webauthn-components/dist/webauthn-login.js';
+import 'node_modules/webauthn-components/dist/webauthn-registration.js';

@@ -1,15 +1,17 @@
 <mat-card style="width: 85%; margin-left: 5%;" >
   <mat-card-title>Conversation</mat-card-title>
-  <mat-card-subtitle>
-    Participants: {{conversation.members}}</mat-card-subtitle>
-  <mat-card-content  [style.overflow]="'auto'" [style.height.px]="'400'">
+<!--  TODO add list of participants-->
+<!--  <mat-card-subtitle *ngIf="conversation">-->
+<!--    Participants: {{conversation.participants}}</mat-card-subtitle>-->
+  <mat-card-content #scrollMe [style.overflow]="'auto'" [style.height.px]="'400'">
     <mat-list-item *ngFor="let message of messages; index as i"
-                   [dir]="message.from === message.from ? 'rtl' : 'ltr'"
+                   [dir]="currentUser.username === message.from ? 'rtl' : 'ltr'"
     >
-      <img *ngIf="message.type == 'text'" matListAvatar matTooltip="{{message.from}}"
-           src="https://randomuser.me/api/portraits/thumb/lego/{{i}}.jpg"
+      <img matListAvatar matTooltip="{{message.from}}"
+           src="https://i.pravatar.cc/150?img={{message.avatar}}.jpg"
       />
-      <p *ngIf="message.type == 'text'" [dir]="'rtl'">{{message.content}}</p>
+      <p [dir]="currentUser.username === message.from ? 'rtl' : 'ltr'">{{message.content}}</p>
+      <p [dir]="currentUser.username === message.from ? 'rtl' : 'ltr'">{{message.dateSent}}</p>
       <p *ngIf="message.type == 'member:joined'" class="text-center">
         <b>{{message.from}}</b> has joined the conversation</p>
     </mat-list-item>

@@ -8,159 +8,77 @@ import {User} from '../model/user';
 @Injectable({providedIn: 'root'})
 export class UserService {
 
-    private currentUserSubject: BehaviorSubject<User>;
-    public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<User>;
+  public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient) {
-        const parse = JSON.parse(localStorage.getItem('currentUser'));
-        if (parse) {
-            this.init(parse);
-        } else {
-            this.currentUserSubject = new BehaviorSubject<User>(null);
-            this.currentUser = this.currentUserSubject.asObservable();
-        }
+  constructor(private http: HttpClient) {
+    const parse = JSON.parse(localStorage.getItem('currentUser'));
+    if (parse) {
+      this.init(parse);
+    } else {
+      this.currentUserSubject = new BehaviorSubject<User>(null);
+      this.currentUser = this.currentUserSubject.asObservable();
+    }
+  }
+
+  private init(parse) {
+    if (this.currentUserSubject) {
+      return;
     }
 
-    private init(parse) {
-        this.currentUserSubject = new BehaviorSubject<User>(Object.assign(
-            new User(),
-            parse
+    this.currentUserSubject = new BehaviorSubject<User>(Object.assign(
+      new User(),
+      parse
+    ));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  isLoggedIn() {
+    const currentUser = localStorage.getItem('currentUser');
+    console.log('isLoggedIn - currentUser: ' + currentUser);
+    return currentUser != null;
+  }
+
+  getUser() {
+    return this.currentUserSubject.asObservable();
+  }
+
+  whoami() {
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+
+    const options = {headers: headers};
+
+    return this.http.get<User>(`${environment.backend}/users/`,
+      options)
+      .pipe(map(user => {
+        console.log('whoami', user);
+        const userString = JSON.stringify(user);
+        localStorage.setItem('currentUser', userString);
+        this.init(userString);
+        this.currentUserSubject.next(Object.assign(
+          new User(),
+          user
         ));
-        this.currentUser = this.currentUserSubject.asObservable();
-    }
+        return user;
+      }));
+  }
+  getActiveUsers() {
 
-    saveToken(token: string) {
-        localStorage.setItem('token', token);
-    }
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
 
-    isLoggedIn() {
-        const item = localStorage.getItem('token');
-        console.log('isLoggedIn - token: ' + item);
-        return item != null;
-    }
-    getUser() {
-        return this.currentUserSubject.asObservable();
-    }
+    const options = {headers: headers};
 
-    whoami() {
-        const token = localStorage.getItem('token');
+    return this.http.get<User[]>(`${environment.backend}/users/active/`, options);
+  }
 
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.get<User>(`${environment.backend}/whoami`,
-            options)
-            .pipe(map(user => {
-                console.log('whoami', user);
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                const userString = JSON.stringify(user);
-                localStorage.setItem('currentUser', userString);
-                this.init(userString);
-                this.currentUserSubject.next(Object.assign(
-                    new User(),
-                    user
-                ));
-                return user;
-            }));
-    }
-
-    availableRoles() {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.get<string[]>(`${environment.backend}/users/roles`,
-            options);
-    }
-
-    getAll() {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.get<User[]>(`${environment.backend}/users`, options);
-    }
-
-    save(user: User) {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.post<User>(`${environment.backend}/users`, user, options);
-    }
-
-    update(user: User) {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.put<User>(`${environment.backend}/users/${user.id}`, user, options);
-    }
-
-    delete(user: User) {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.delete<User>(`${environment.backend}/users/${user.id}`, options);
-    }
-
-    updateUser(firstName, lastName, phone) {
-        const token = localStorage.getItem('token');
-
-        const headers = new HttpHeaders({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token
-        });
-
-        const options = {headers: headers};
-
-        return this.http.patch<User>(`${environment.backend}/whoami`,
-            {firstName: firstName, lastName: lastName, phone: phone},
-            options)
-            .pipe(map(user => {
-                // store user details and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('currentUser', JSON.stringify(user));
-                this.currentUserSubject.next(user);
-                return user;
-            }));
-    }
-
-    logout() {
-        console.log('logout - removing all local data');
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('token');
-        localStorage.removeItem('deviceId');
-        this.currentUserSubject.next(null);
-    }
+  logout() {
+    console.log('logout - removing all local data');
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
 }

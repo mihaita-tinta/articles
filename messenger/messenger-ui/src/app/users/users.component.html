@@ -2,11 +2,25 @@
   <mat-grid-tile>
     <mat-card>
       <mat-card-title>Online users</mat-card-title>
-      <mat-card-content>
+      <mat-card-subtitle>
+        <button mat-menu-item (click)="refresh()">
+          <mat-icon>refresh</mat-icon>
+        </button>
+      </mat-card-subtitle>
+      <mat-card-content *ngIf="users && users.length > 0">
+        <mat-list role="list">
+          <mat-list-item role="listitem" *ngFor="let user of users">
+            <button mat-menu-item (click)="startConversation(user)">
+              {{user.username}} <mat-icon>navigate_next</mat-icon>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+      <mat-card-content *ngIf="!users">
         <mat-list role="list">
           <mat-list-item role="listitem">
             <button mat-menu-item>
-              <a [routerLink]="['/conversation/123']">User1 <mat-icon>navigate_next</mat-icon></a>
+              <span>No active users right now</span>
             </button>
           </mat-list-item>
         </mat-list>

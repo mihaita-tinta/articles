@@ -4,15 +4,11 @@
       <mat-card-title>Conversations</mat-card-title>
       <mat-card-content>
         <mat-list role="list">
-          <mat-list-item role="listitem">
+          <mat-list-item role="listitem" *ngFor="let conversation of conversations">
             <button mat-menu-item>
-              <a [routerLink]="['/conversation/123']">Conversation1 <mat-icon>navigate_next</mat-icon></a>
+              <a [routerLink]="[conversation.id]">Users: {{getNames(conversation)}} <mat-icon>navigate_next</mat-icon></a>
             </button>
           </mat-list-item>
-          <mat-list-item role="listitem">
-            <button mat-menu-item>
-              <a [routerLink]="['/conversation/456']">Conversation2 <mat-icon>navigate_next</mat-icon></a>
-            </button></mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>

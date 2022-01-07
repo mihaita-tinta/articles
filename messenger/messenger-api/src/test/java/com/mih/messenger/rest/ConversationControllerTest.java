@@ -197,8 +197,8 @@ class ConversationControllerTest {
         User participant2 = User.of(2L, "participant2");
         when(messageRepository.findAllByConversationOrderByDateSentDesc(any()))
                 .thenReturn(Stream.of(
-                        Message.from(participant1, conversation, "Hello").with(1L),
-                        Message.from(participant2, conversation, "Hey, how are you?").with(2L)));
+                        Message.from(participant1, conversation, "Hello", 1L).with(1L),
+                        Message.from(participant2, conversation, "Hey, how are you?", 1L).with(2L)));
 
         when(conversationRepository.findAllByParticipantsContaining(any()))
                 .thenReturn(Stream.of(

@@ -1,11 +1,16 @@
 <p>
   <mat-toolbar>
-    <span>Messenger UI</span>
+    <span>
+        <a [routerLink]="['/']">Messenger UI</a></span>
     <span class="example-spacer"></span>
-    <button color="primary" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
+    <button  *ngIf="(user | async) != null"
+             color="primary" mat-icon-button [matMenuTriggerFor]="menu" aria-label="Menu">
       <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+       Welcome: {{(user | async)?.username}}
+      </button>
       <button mat-menu-item>
         <mat-icon>message</mat-icon>
         <a [routerLink]="['/conversation']">Conversations</a>
@@ -16,7 +21,7 @@
       </button>
       <button mat-menu-item>
         <mat-icon>logout</mat-icon>
-        <a [routerLink]="['/login']">Logout</a>
+        <a [routerLink]="['/login']" (click)="logout()">Logout</a>
       </button>
     </mat-menu>
   </mat-toolbar>

@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class MessageDto {
     private Long id;
+    private Long avatar;
     private String content;
     private Date dateSent;
     private Date dateDelivered;
@@ -67,6 +68,14 @@ public class MessageDto {
 
     public void setConversationId(Long conversationId) {
         this.conversationId = conversationId;
+    }
+
+    public Long getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(Long avatar) {
+        this.avatar = avatar;
     }
 
     @Override

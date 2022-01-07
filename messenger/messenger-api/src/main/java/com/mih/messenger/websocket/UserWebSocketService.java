@@ -77,7 +77,7 @@ public class UserWebSocketService {
 
         boolean isANewMessage = m.getId() == null;
         if (isANewMessage) {
-            return messageRepository.save(Message.from(sender, conversation, m.getContent()));
+            return messageRepository.save(Message.from(sender, conversation, m.getContent(), m.getAvatar()));
         } else {
             return messageRepository.findById(m.getId())
                     .map(existingMessage -> {

@@ -25,7 +25,7 @@ class MessageRepositoryTest {
         Conversation conversation = conversationRepository.findAllByParticipantsContaining(participant1)
                 .findFirst().get();
 
-        Message message = Message.from(participant1, conversation, "Hello World");
+        Message message = Message.from(participant1, conversation, "Hello World", 1L);
 
         messageRepository.saveAndFlush(message);
 

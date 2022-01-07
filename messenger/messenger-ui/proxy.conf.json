@@ -1,0 +1,25 @@
+{
+  "/api/*": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false,
+    "logLevel": "debug"
+  },
+  "/users/": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/users/active/": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/conversations/*": {
+    "target": "http://127.0.0.1:8080",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

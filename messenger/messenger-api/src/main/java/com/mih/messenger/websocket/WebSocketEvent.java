@@ -26,6 +26,7 @@ public class WebSocketEvent {
         event.attributes.put("dateDelivered", message.getDateDelivered());
         event.attributes.put("dateViewed", message.getDateViewed());
         event.attributes.put("content", message.getContent());
+        event.attributes.put("avatar", message.getAvatar());
         event.attributes.put("conversationId", message.getConversation().getId());
         return event;
     }

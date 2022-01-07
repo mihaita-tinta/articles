@@ -3,14 +3,14 @@
     <mat-card>
       <mat-card-title>Login</mat-card-title>
       <mat-card-content>
-        <mat-form-field appearance="fill">
-          <mat-label>Enter your username</mat-label>
-          <input matInput placeholder="username" [formControl]="username" required>
-          <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
-        </mat-form-field>
+<!--        <mat-form-field appearance="fill">-->
+<!--          <mat-label>Enter your username</mat-label>-->
+<!--          <input matInput placeholder="username" [formControl]="username" required>-->
+<!--          <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>-->
+<!--        </mat-form-field>-->
+        <webauthn-login #login></webauthn-login>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary" (click)="login()">Login</button>
         <a [routerLink]="['/register']">Signup</a>
       </mat-card-actions>
     </mat-card>

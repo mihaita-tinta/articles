@@ -15,7 +15,7 @@ webauthn:
   relying-party-id: localhost
   relying-party-name: Example Application
   relying-party-icon: http://localhost:8080/assets/logo.png
-  relying-party-origins: http://localhost:8080
+  relying-party-origins: http://localhost:8080,http://localhost:4200
   endpoints:
     registrationStartPath: /api/registration/start
     registrationAddPath: /api/registration/add

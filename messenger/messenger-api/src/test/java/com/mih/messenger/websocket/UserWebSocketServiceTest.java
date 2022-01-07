@@ -69,7 +69,7 @@ public class UserWebSocketServiceTest {
                         new HttpHeaders(),
                         session -> {
                             Flux<WebSocketMessage> sentFlux = Flux.interval(Duration.of(2, SECONDS))
-                                    .map(i -> MessageMapper.INSTANCE.toDto(Message.from(currentUser, conversation, currentUser.getUsername() + " says hello  " + i)))
+                                    .map(i -> MessageMapper.INSTANCE.toDto(Message.from(currentUser, conversation, currentUser.getUsername() + " says hello  " + i, 1L)))
                                     .map(this::eventToString)
                                     .map(json -> {
                                         log.info("test - generating payload: " + json);
@@ -110,7 +110,7 @@ public class UserWebSocketServiceTest {
         Conversation conversation = conversationRepository.save(Conversation.between(user2, currentUser));
 
         Flux.interval(Duration.of(1, SECONDS))
-                .map(i -> MessageMapper.INSTANCE.toDto(Message.from(user2, conversation, user2.getUsername() + " says hello  " + i)))
+                .map(i -> MessageMapper.INSTANCE.toDto(Message.from(user2, conversation, user2.getUsername() + " says hello  " + i, 1L)))
                 .flatMap(event -> {
                     log.info("test - sending payload: " + event);
                     return incommingWebSocketStrategy.onMessage(user2, eventToString(event));
