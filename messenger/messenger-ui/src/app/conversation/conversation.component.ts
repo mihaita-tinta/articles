@@ -38,9 +38,7 @@ export class ConversationComponent implements OnInit {
 
     this.websocketService.events.subscribe(event => {
       console.log('received: ', event);
-      this.messages.push({...event,
-        type: 'text'
-      });
+      this.messages.push({...event});
       this.scrollToBottom();
     });
 
