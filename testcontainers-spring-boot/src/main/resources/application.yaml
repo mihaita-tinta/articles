@@ -1,0 +1,5 @@
+spring:
+  cassandra:
+    local-datacenter: datacenter1
+    keyspace-name: test
+    schema-action: create_if_not_exists
